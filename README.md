@@ -1,8 +1,10 @@
-# gatsby-source-google-sheets
+# gatsby-source-google-sheets-raw
 
 Why go through the hassle of setting up a complicated headless CMS when Google Sheets already has user permissions, revision history, and a powerful UI? 
 
 This source plugin for [Gatsby JS](https://github.com/gatsbyjs/gatsby) will turn any Google Sheets worksheet into a GraphQL type for build-time consumption. 
+
+Forked from `gatsby-source-google-sheets`, but comes with config options for disabling/enabling automatic type casting.
 
 # How to:
 
@@ -27,14 +29,15 @@ yarn add gatsby-source-google-sheets
     options: {
         spreadsheetId: 'get this from the sheet url',
         worksheetTitle: 'ie the name in the worksheet tab',
-        credentials: require('./path-to-credentials-file.json')
+        credentials: require('./path-to-credentials-file.json'),
+        autoCast: true
     }
 },
 // ...
 
 ```
 
-The plugin makes the following conversions before feeding Gatsby nodes:
+The plugin makes the following conversions before feeding Gatsby nodes, if `autoCast` is true:
 1. Numbers are converted to numbers. Sheets formats numbers as comma-delineated strings, so to determine if something is a number, the plugin tests to see if the string (a) is non-empty and (b) is composed only of commas, decimals, and digits:
 ```
 if (
