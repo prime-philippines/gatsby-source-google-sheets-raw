@@ -1,7 +1,7 @@
 {
-    "name": "gatsby-source-google-sheets",
-    "version": "1.1.1",
-    "description": "A source plugin for Gatsby that allows reading data from Google Sheets.",
+    "name": "gatsby-source-google-sheets-raw",
+    "version": "1.1.2",
+    "description": "A source plugin for Gatsby that allows reading data from Google Sheets, providing options for disabling automatic type casting.",
     "main": "index.js",
     "scripts": {
         "build": "babel src --out-dir .",
@@ -10,7 +10,7 @@
         "prettify": "prettier ./src/** --write",
         "test": "jest"
     },
-    "author": "Brandon Paquette <brandon@brandon.sh>",
+    "author": "Ralph Sto. Domingo <ralph.sto.domingo@primephilippines.com>",
     "keywords": [
         "gatsby",
         "gatsby-plugin",
