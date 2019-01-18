@@ -26,7 +26,8 @@ const getRows = (worksheet, options = {}) => new Promise((resolve, reject) => wo
   }
 }));
 
-const cleanRows = rows => rows.map(r => _.chain(r).omit(["_xml", "app:edited", "save", "del", "_links"]).mapKeys((v, k) => _.camelCase(k)).mapValues(val => {
+const cleanRows = (rows, autoCast) => rows.map(r => _.chain(r).omit(["_xml", "app:edited", "save", "del", "_links"]).mapKeys((v, k) => _.camelCase(k)).mapValues(val => {
+  if (!autoCast) return val;
   if (val === "") return null;
   // sheets apparently leaves commas in some #s depending on formatting
   if (val.replace(/[,\.\d]/g, "").length === 0 && val !== "") {
@@ -37,11 +38,11 @@ const cleanRows = rows => rows.map(r => _.chain(r).omit(["_xml", "app:edited", "
   return val;
 }).value());
 
-const fetchData = async (spreadsheetId, worksheetTitle, credentials) => {
+const fetchData = async (spreadsheetId, worksheetTitle, credentials, autoCast) => {
   const spreadsheet = await getSpreadsheet(spreadsheetId, credentials);
   const worksheet = await getWorksheetByTitle(spreadsheet, worksheetTitle);
   const rows = await getRows(worksheet);
-  return cleanRows(rows);
+  return cleanRows(rows, autoCast);
 };
 
 exports.cleanRows = cleanRows;

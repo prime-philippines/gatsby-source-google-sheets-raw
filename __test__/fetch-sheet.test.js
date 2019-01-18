@@ -35,9 +35,14 @@ describe("cleaning rows from GSheets response", () => {
     const cleaned = cleanRows([emojiRow])[0];
     expect(cleaned.emoji).toEqual(TEST_EMOJI_STRING);
   });
-  it("returns comma-delineated number strings as numbers", () => {
+  it("returns comma-delineated number strings as numbers if autoCast is true", () => {
     const numRow = { short: "1", long: "123,456,789", decimal: "0.5912", mixed: "123,456.789" };
-    const cleaned = cleanRows([numRow])[0];
+    const cleaned = cleanRows([numRow], true)[0];
     expect(Object.values(cleaned)).toEqual([1, 123456789, 0.5912, 123456.789]);
+  });
+  it("returns values unmodified if autoCast is false", () => {
+    const numRow = { short: "1", long: "123,456,789", decimal: "0.5912", mixed: "123,456.789" };
+    const cleaned = cleanRows([numRow], false)[0];
+    expect(Object.values(cleaned)).toEqual(["1", "123,456,789", "0.5912", "123,456.789"]);
   });
 });

@@ -6,11 +6,11 @@ const seedConstant = "2972963f-2fcf-4567-9237-c09a2b436541";
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, store, cache },
-  { spreadsheetId, worksheetTitle, credentials }
+  { spreadsheetId, worksheetTitle, credentials, autoCast }
 ) => {
   const { createNode } = boundActionCreators;
   console.log("FETCHING SHEET", fetchSheet);
-  let rows = await fetchSheet(spreadsheetId, worksheetTitle, credentials);
+  let rows = await fetchSheet(spreadsheetId, worksheetTitle, credentials, autoCast);
 
   rows.forEach(r => {
     createNode(
